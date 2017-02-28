@@ -29,6 +29,21 @@ public class BoardModel
     }
 
     /*
+     * Copy constructor
+     */
+    public BoardModel( BoardModel originalBoard )
+    {
+        squares = new SquareType[ 3, 3 ];
+        for ( int x = 0; x < squares.GetLength( 0 ); x++ )
+        {
+            for ( int y = 0; y < squares.GetLength( 1 ); y++ )
+            {
+                squares[ x, y ] = originalBoard.squares[ x, y ];
+            }
+        }
+    }
+
+    /*
      * Get every possible coordinate position on the board
      * @return A list with positions
      */
