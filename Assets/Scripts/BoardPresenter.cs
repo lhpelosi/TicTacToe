@@ -8,6 +8,8 @@ public class BoardPresenter
     private BoardViewer viewer;
     // Current turn
     private BoardModel.SquareType turn;
+    // Robot opponent
+    private RobotPlayer robot;
 
     /*
      * Constructor
@@ -18,6 +20,9 @@ public class BoardPresenter
         model = new BoardModel();
         viewer = boardViewer;
         turn = BoardModel.SquareType.CROSS;
+
+        // Starts robot as second player
+        robot = new RobotPlayer( BoardModel.swapType( turn ) );
     }
 
     /*
@@ -27,12 +32,19 @@ public class BoardPresenter
     public void choosePosition( Coordinates position )
     {
         if ( model.at( position ) != BoardModel.SquareType.EMPTY ) return;
-        
-        model.setPositionTo( position, turn );
-        viewer.setPositionTo( position, turn );
+
+        play( position, turn );
+
+        Coordinates robotChoice = robot.decidesPlay( model );
+        play( robotChoice, robot.side );
+    }
+
+    private void play( Coordinates position, BoardModel.SquareType player )
+    {
+        model.setPositionTo( position, player );
+        viewer.setPositionTo( position, player );
 
         turn = BoardModel.swapType( turn );
-
         Debug.Log( model.computeWinner() );
     }
 }
