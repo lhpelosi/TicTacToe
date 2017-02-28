@@ -1,27 +1,33 @@
 ﻿public class BoardPresenter
 {
+    // Reference to its model
     private BoardModel model;
+    // Reference to its viewer
     private BoardViewer viewer;
+    // Current turn
     private BoardModel.SquareType turn;
 
-	// Use this for initialization
-	public BoardPresenter( BoardViewer boardViewer )
+    /*
+     * Constructor
+     * param boardViewer Reference to its viewer
+     */
+    public BoardPresenter( BoardViewer boardViewer )
     {
         model = new BoardModel();
         viewer = boardViewer;
         turn = BoardModel.SquareType.CROSS;
     }
 
-    public void choosePosition(int x, int y)
+    /*
+     * Action of the player of choosing a certain position on the board
+     * @param position Board coordinates
+     */
+    public void choosePosition( Coordinates position )
     {
-        // Only proceeds if the chosen position is empty
-        if ( model.squares[x,y] != BoardModel.SquareType.EMPTY )
-        {
-            return;
-        }
-
-        model.squares[x, y] = turn;
-        viewer.setPositionTo(x, y, turn);
+        if ( model.at( position ) != BoardModel.SquareType.EMPTY ) return;
+        
+        model.setPositionTo( position, turn );
+        viewer.setPositionTo( position, turn );
 
         turn = BoardModel.swapType( turn );
     }

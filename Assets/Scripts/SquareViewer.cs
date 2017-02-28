@@ -2,19 +2,24 @@
 
 public class SquareViewer : MonoBehaviour
 {
-    private int positionX = -1;
-    private int positionY = -1;
-
+    // Reference to the board presenter
     public BoardPresenter presenter;
 
-	public void linkToPosition( int x, int y )
+    // Position referring the board coordinates
+    private Coordinates position;
+
+    /*
+     * Attaches this particular square to the model coordinate system.
+     * @param position Position in the board
+     */
+    public void linkToPosition( Coordinates position )
     {
-        positionX = x;
-        positionY = y;
+        this.position = position;
     }
 
+    // MouseDown calllback
     void OnMouseDown()
     {
-        presenter.choosePosition(positionX, positionY);
+        presenter.choosePosition( position );
     }
 }
