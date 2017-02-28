@@ -21,28 +21,41 @@ public class BoardPresenter
         viewer = boardViewer;
         turn = BoardModel.SquareType.CROSS;
 
-        // Starts robot as second player
-        robot = new RobotPlayer( BoardModel.swapType( turn ) );
+        // Starts robot as opposite player
+        robot = new RobotPlayer( BoardModel.swapType( GameSettings.Instance.humanSide ) );
     }
 
     /*
-     * Action of the player of choosing a certain position on the board
+     * Action of the human player choosing a certain position on the board
      * @param position Board coordinates
      */
-    public void choosePosition( Coordinates position )
+    public void humanMove( Coordinates position )
     {
+        if ( turn != GameSettings.Instance.humanSide ) return;
         if ( model.at( position ) != BoardModel.SquareType.EMPTY ) return;
 
-        play( position, turn );
+        play( position );
+    }
+    
+    /*
+     * Action of the robot player
+     */
+    public void robotMove()
+    {
+        if ( turn != robot.side ) return;
 
         Coordinates robotChoice = robot.decidesPlay( model );
-        play( robotChoice, robot.side );
+        play( robotChoice );
     }
 
-    private void play( Coordinates position, BoardModel.SquareType player )
+    /*
+     * Make a move
+     * @param position Board coordinates
+     */
+    private void play( Coordinates position )
     {
-        model.setPositionTo( position, player );
-        viewer.setPositionTo( position, player );
+        model.setPositionTo( position, turn );
+        viewer.setPositionTo( position, turn );
 
         turn = BoardModel.swapType( turn );
         Debug.Log( model.computeWinner() );

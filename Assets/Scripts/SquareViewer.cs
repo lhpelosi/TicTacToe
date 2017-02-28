@@ -20,6 +20,6 @@ public class SquareViewer : MonoBehaviour
     // MouseDown calllback
     void OnMouseDown()
     {
-        presenter.choosePosition( position );
+        presenter.humanMove( position );
     }
 }

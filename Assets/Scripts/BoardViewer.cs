@@ -41,6 +41,12 @@ public class BoardViewer : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        // The robot might play if it can
+        presenter.robotMove();
+    }
+
     /*
      * Change the rendering of a square for a type ( cross or nought )
      * @param position The position on the board
