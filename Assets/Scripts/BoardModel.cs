@@ -84,4 +84,47 @@ public class BoardModel
         }
         else return type;
     }
+
+    /*
+     * Check who is the winner given the current configuration of the board
+     * @return The type of the winner ( CROSS or NOUGHT ) or EMPTY if there is not a winner
+     */
+    public SquareType computeWinner()
+    {
+        int size = squares.GetLength( 0 );
+        foreach ( SquareType type in new SquareType[]{ SquareType.CROSS, SquareType.NOUGHT } )
+        {
+            // Check each line
+            for ( int x=0; x < size; x++ )
+            {
+                bool winner = true;
+                for ( int y = 0; y < size; y++ )
+                {
+                    winner = winner && ( squares[ x, y ] == type );
+                }
+                if ( winner ) return type;
+            }
+            // Check each collumn
+            for ( int y = 0; y < size; y++ )
+            {
+                bool winner = true;
+                for ( int x = 0; x < size; x++ )
+                {
+                    winner = winner && ( squares[ x, y ] == type );
+                }
+                if ( winner ) return type;
+            }
+            // Check for diagonals
+            bool winnerD1 = true;
+            bool winnerD2 = true;
+            for ( int i = 0; i < size; i++ )
+            {
+                winnerD1 = winnerD1 && ( squares[ i, i ] == type );
+                winnerD2 = winnerD2 && ( squares[ i, size-1-i ] == type );
+            }
+            if ( winnerD1 || winnerD2 ) return type;
+        }
+        // When there is not a winner yet
+        return SquareType.EMPTY;
+    }
 }

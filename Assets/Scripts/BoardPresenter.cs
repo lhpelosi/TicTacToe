@@ -1,4 +1,6 @@
-﻿public class BoardPresenter
+﻿using UnityEngine;
+
+public class BoardPresenter
 {
     // Reference to its model
     private BoardModel model;
@@ -30,5 +32,7 @@
         viewer.setPositionTo( position, turn );
 
         turn = BoardModel.swapType( turn );
+
+        Debug.Log( model.computeWinner() );
     }
 }
