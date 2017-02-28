@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/*
+ * SquareViewer.cs - Class that connects the square prefabs on interface with the board.
+ * @author lhpelosi
+ */
+
+using UnityEngine;
 
 public class SquareViewer : MonoBehaviour
 {

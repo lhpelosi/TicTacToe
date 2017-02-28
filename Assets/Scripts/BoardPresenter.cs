@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿/*
+ * BoardPresenter.cs - Class responsible for operations on the game board
+ * @author lhpelosi
+ */
 
 public class BoardPresenter
 {
@@ -58,6 +61,24 @@ public class BoardPresenter
         viewer.setPositionTo( position, turn );
 
         turn = BoardModel.swapType( turn );
-        Debug.Log( model.computeWinner() );
+        checkEndGame();
+    }
+    
+    /*
+     * Check if there is a winner and stops the game if so
+     */
+    private void checkEndGame()
+    {
+        BoardModel.SquareType winner = model.computeWinner();
+        if ( winner != BoardModel.SquareType.EMPTY )
+        {
+            turn = BoardModel.SquareType.EMPTY;
+            viewer.endGame( winner );
+        }
+        else if ( model.getEmptyPositions().Count == 0 )
+        {
+            turn = BoardModel.SquareType.EMPTY;
+            viewer.endGame( BoardModel.SquareType.EMPTY );
+        }
     }
 }

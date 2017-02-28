@@ -1,9 +1,16 @@
-﻿using UnityEngine;
+﻿/*
+ * BoardViewer.cs - Class responsible for the board visualization, connecting with the Unity interface.
+ * @author lhpelosi
+ */
+
+using UnityEngine;
 
 public class BoardViewer : MonoBehaviour
 {
     // Prefab for the interactive squares
     public GameObject squarePrefab;
+    // Object for the end game screen
+    public GameObject endGameCanvas;
     // Sprites for each square state
     public Sprite emptySprite;
     public Sprite crossSprite;
@@ -63,5 +70,11 @@ public class BoardViewer : MonoBehaviour
         {
             renderer.sprite = noughtSprite;
         }
+    }
+
+    public void endGame( BoardModel.SquareType winner )
+    {
+        endGameCanvas.SetActive( true );
+        endGameCanvas.GetComponent<EndGameUI>().setWinner( winner );
     }
 }

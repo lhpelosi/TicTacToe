@@ -1,4 +1,9 @@
-﻿using System.Collections.Generic;
+﻿/*
+ * BoardModel.cs - Class responsible for storing the static state of a board
+ * @author lhpelosi
+ */
+
+using System.Collections.Generic;
 
 public class BoardModel
 {
@@ -63,6 +68,24 @@ public class BoardModel
     }
 
     /*
+     * Get only empty positions available
+     * @return A list with empty positions
+     */
+    public List<Coordinates> getEmptyPositions()
+    {
+        List<Coordinates> emptyPositions = new List<Coordinates>();
+        foreach ( Coordinates position in getPositions() )
+        {
+            if ( at( position ) == SquareType.EMPTY )
+            {
+                emptyPositions.Add( position );
+            }
+        }
+
+        return emptyPositions;
+    }
+
+    /*
      * Get the state of a specific position on the board
      * @param position Board position
      * @return State of position
@@ -102,7 +125,7 @@ public class BoardModel
 
     /*
      * Check who is the winner given the current configuration of the board
-     * @return The type of the winner ( CROSS or NOUGHT ) or EMPTY if there is not a winner
+     * @return The type of the winner ( CROSS or NOUGHT ) or EMPTY if the winner can't be defined
      */
     public SquareType computeWinner()
     {
