@@ -1,13 +1,15 @@
 ﻿/*
- * SideChoice.cs - Class that reacts to the SideChoicePanel buttons.
+ * SideChoiceUI.cs - Class that reacts to the SideChoicePanel buttons.
  * @author lhpelosi
  */
 
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class SideChoice : MonoBehaviour
+public class SideChoiceUI : MonoBehaviour
 {
+    // References a next canvas to load
+    public GameObject nextChoice;
+
     /*
      * Cross button callback
      */
@@ -31,6 +33,7 @@ public class SideChoice : MonoBehaviour
      */
     private void proceed()
     {
-        SceneManager.LoadScene( "game", LoadSceneMode.Single );
+        nextChoice.SetActive( true );
+        gameObject.SetActive( false );
     }
 }

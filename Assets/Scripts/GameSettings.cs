@@ -5,11 +5,19 @@
 
 public class GameSettings
 {
+    public enum Difficulty
+    {
+        EASY,
+        NORMAL,
+        HARD
+    }
+
     // Singleton instance
     private static GameSettings instance = null;
 
     // Settings to persist
     public BoardModel.SquareType humanSide;
+    public Difficulty difficulty;
 
     /*
      * Constructor
@@ -18,6 +26,7 @@ public class GameSettings
     {
         // Default settings
         humanSide = BoardModel.SquareType.CROSS;
+        difficulty = Difficulty.NORMAL;
     }
 	
     /* 

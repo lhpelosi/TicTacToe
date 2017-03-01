@@ -5,6 +5,7 @@
 
 using System.Collections.Generic;
 using System;
+using UnityEngine;
 
 public class RobotPlayer
 {
@@ -27,7 +28,18 @@ public class RobotPlayer
      */
     public Coordinates decidesPlay( BoardModel board )
     {
-        return decidesDeep( board );
+        switch ( GameSettings.Instance.difficulty )
+        {
+            case GameSettings.Difficulty.EASY :
+                return decidesRandom( board );
+            case GameSettings.Difficulty.NORMAL :
+                return decidesShallow( board );
+            case GameSettings.Difficulty.HARD :
+                return decidesDeep( board );
+            // Error
+            default :
+                return new Coordinates( -1, -1 );
+        }
     }
 
     // Decides next play randomly
