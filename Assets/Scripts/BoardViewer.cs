@@ -50,6 +50,8 @@ public class BoardViewer : MonoBehaviour
 
     void Update()
     {
+        if ( presenter == null ) return;
+
         // The robot might play if it can
         presenter.robotMove();
     }

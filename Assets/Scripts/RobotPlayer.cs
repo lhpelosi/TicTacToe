@@ -1,4 +1,10 @@
-﻿using System.Collections.Generic;
+﻿/*
+ * RobotPlayer.cs - Entity of the cpu opposite player.
+ * @author lhpelosi
+ */
+
+using System.Collections.Generic;
+using System;
 
 public class RobotPlayer
 {
@@ -21,7 +27,7 @@ public class RobotPlayer
      */
     public Coordinates decidesPlay( BoardModel board )
     {
-        return decidesShallow( board );
+        return decidesDeep( board );
     }
 
     // Decides next play randomly
@@ -89,5 +95,79 @@ public class RobotPlayer
 
         // Error
         return new Coordinates( -1, -1 );
+    }
+
+    // Decides next play analysing all plays forward, using a minmax algorithm
+    private Coordinates decidesDeep( BoardModel board )
+    {
+        List<Coordinates> bestMoves = new List<Coordinates>();
+
+        int maxScore = Int32.MinValue;
+        foreach ( Coordinates move in board.getEmptyPositions() )
+        {
+            BoardModel predictedBoard = new BoardModel( board );
+            predictedBoard.setPositionTo( move, this.side );
+            int score = getMinMaxScore( predictedBoard, BoardModel.swapType( this.side ) );
+            if ( score > maxScore )
+            {
+                maxScore = score;
+                bestMoves.Clear();
+                bestMoves.Add( move );
+            }
+            else if ( score == maxScore )
+            {
+                bestMoves.Add( move );
+            }
+        }
+
+        System.Random random = new System.Random();
+        return bestMoves[ random.Next( bestMoves.Count ) ];
+    }
+
+    // Minmax recursive analysis
+    private int getMinMaxScore( BoardModel board, BoardModel.SquareType nextTurn )
+    {
+        List<Coordinates> possibleMoves = board.getEmptyPositions();
+        BoardModel.SquareType winner = board.computeWinner();
+
+        // Case robot wins, it's a positive score relative to decision tree depth
+        if ( winner == this.side ) return possibleMoves.Count+1;
+        // Case robot loses, it's a negative score relative to decision tree depth
+        if ( winner == BoardModel.swapType( side ) ) return -possibleMoves.Count-1;
+        // Case it's a draw leaf
+        if ( possibleMoves.Count == 0 ) return 0;
+
+        // Robot turn, maximizes score
+        if ( nextTurn == this.side )
+        {
+            int maxScore = Int32.MinValue;
+            foreach ( Coordinates move in possibleMoves )
+            {
+                BoardModel predictedBoard = new BoardModel( board );
+                predictedBoard.setPositionTo( move, nextTurn );
+                int score = getMinMaxScore( predictedBoard, BoardModel.swapType( nextTurn ) );
+                if ( score > maxScore )
+                {
+                    maxScore = score;
+                }
+            }
+            return maxScore;
+        }
+        // Opponent turn, minimizes score
+        else
+        {
+            int minScore = Int32.MaxValue;
+            foreach ( Coordinates move in possibleMoves )
+            {
+                BoardModel predictedBoard = new BoardModel( board );
+                predictedBoard.setPositionTo( move, nextTurn );
+                int score = getMinMaxScore( predictedBoard, BoardModel.swapType( nextTurn ) );
+                if ( score < minScore )
+                {
+                    minScore = score;
+                }
+            }
+            return minScore;
+        }
     }
 }
