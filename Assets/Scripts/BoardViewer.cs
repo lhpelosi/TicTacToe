@@ -74,6 +74,10 @@ public class BoardViewer : MonoBehaviour
         }
     }
 
+    /*
+     * Popups the winner canvas
+     * @param winner Who is the winner: cross, nought or draw (EMPTY)
+     */
     public void endGame( BoardModel.SquareType winner )
     {
         endGameCanvas.SetActive( true );

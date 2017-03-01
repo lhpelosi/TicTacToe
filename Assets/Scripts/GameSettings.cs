@@ -1,4 +1,9 @@
-﻿public class GameSettings
+﻿/*
+ * GameSettings.cs - Store the player settings along the game.
+ * @author lhpelosi
+ */
+
+public class GameSettings
 {
     // Singleton instance
     private static GameSettings instance = null;

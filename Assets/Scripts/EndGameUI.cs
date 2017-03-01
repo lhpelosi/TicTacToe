@@ -9,18 +9,29 @@ using UnityEngine.UI;
 
 public class EndGameUI : MonoBehaviour {
 
+    // Object cointaining the text of the game result
     public GameObject winnerText;
 
-	public void playAgain()
+    /*
+     * "Play again" button callback
+     */
+    public void playAgain()
     {
         SceneManager.LoadScene( "game", LoadSceneMode.Single );
     }
-	
-	public void backToTitle()
+
+    /*
+     * "Back to title" button callback
+     */
+    public void backToTitle()
     {
         SceneManager.LoadScene( "title", LoadSceneMode.Single );
     }
-
+    
+    /*
+     * Modify the winning text according to result
+     * @param winner Who is the winner: cross, nought or draw (EMPTY)
+     */
     public void setWinner( BoardModel.SquareType winner )
     {
         string text = "";

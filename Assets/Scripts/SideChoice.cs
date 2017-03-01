@@ -1,10 +1,15 @@
-﻿using UnityEngine;
+﻿/*
+ * SideChoice.cs - Class that reacts to the SideChoicePanel buttons.
+ * @author lhpelosi
+ */
+
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SideChoice : MonoBehaviour
 {
     /*
-     * Cross button action
+     * Cross button callback
      */
     public void choseCross()
     {
@@ -13,7 +18,7 @@ public class SideChoice : MonoBehaviour
     }
 
     /*
-     * Nought button action
+     * Nought button callback
      */
     public void choseNought()
     {

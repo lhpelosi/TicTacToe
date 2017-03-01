@@ -1,4 +1,9 @@
-﻿public class Coordinates
+﻿/*
+ * Coordinates.cs - Basic coordinates structures to represent a board position
+ * @author lhpelosi
+ */
+
+public class Coordinates
 {
     public int x;
     public int y;
